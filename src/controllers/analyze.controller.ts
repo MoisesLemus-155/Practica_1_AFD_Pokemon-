@@ -1,19 +1,26 @@
 import { Request, Response } from 'express';
-import {LexicalAnalyzer} from '../Analyzer/LexicalAnalyzer';
+import { LexicalAnalyzer } from '../Analyzer/LexicalAnalyzer';
+import { processTokens } from '../Analyzer/processTokens';
+
 
 export const analyze = async (req: Request, res: Response) => {
+    // const input = req.body.input;
     const input = req.body;
 
-    let lexicalAnalyzer: LexicalAnalyzer = new LexicalAnalyzer();
+    const lexicalAnalyzer = new LexicalAnalyzer();
+    const tokenList = lexicalAnalyzer.scanner(input);
+    const errorList = lexicalAnalyzer.getErrorList();
 
-    let tokenList = lexicalAnalyzer.scanner(input);
-    let errorList = lexicalAnalyzer.getErrorList();
+    const jugadores = processTokens(tokenList);
 
     res.json({
-        "tokens": tokenList,
-        "errors": errorList,
-    })
-}
+        tokens: tokenList,
+        errors: errorList,
+        jugadores: jugadores,
+    });
+};
+
+
 
 export const ping = (req: Request, res: Response) => {
     res.send("pong");

@@ -123,8 +123,15 @@ class LexicalAnalyzer {
                             break;
 
                         case '\n':
+                            this.row++;
+                            this.column = 1;
+                            break;
                         case '\r':
-                            this.row = this.row + 1;
+                            // Ignorar '\r' si viene seguido de '\n'
+                            if (input[i + 1] === '\n') {
+                                i++; // saltar el '\n'
+                            }
+                            this.row++;
                             this.column = 1;
                             break;
                         case '\t':
@@ -788,7 +795,6 @@ class LexicalAnalyzer {
     getErrorList() {
         return this.errorList;
     }
-
 
 }
 

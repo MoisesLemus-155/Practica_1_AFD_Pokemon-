@@ -1,9 +1,12 @@
 import express from 'express';
 import analyzeRouter from './routes/analyze.route';
+import cors from 'cors'
 
 const app = express()
 const PORT = 3000;
 
+app.use(cors())
+app.use(express.json());
 app.use(express.text());
 app.use(analyzeRouter)
 
