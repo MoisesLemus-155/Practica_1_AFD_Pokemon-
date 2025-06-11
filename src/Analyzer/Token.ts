@@ -18,14 +18,10 @@ enum Type {
 
 class Token {
 
-    // private row: number;
-    // private column: number;
-    // private lexeme: string;
-    // private typeToken: Type;
-    public row: number;
-    public column: number;
-    public lexeme: string;
-    public typeToken: Type;
+    private row: number;
+    private column: number;
+    private lexeme: string;
+    private typeToken: Type;
 
     constructor(typeToken: Type, lexeme: string, row: number, column: number) {
         this.typeToken = typeToken;
@@ -40,14 +36,6 @@ class Token {
 
     getType(): Type {
         return this.typeToken;
-    }
-
-    getRow(): number {
-        return this.row;
-    }
-
-    getColumn(): number {
-        return this.column;
     }
 }
 

@@ -127,9 +127,8 @@ class LexicalAnalyzer {
                             this.column = 1;
                             break;
                         case '\r':
-                            // Ignorar '\r' si viene seguido de '\n'
                             if (input[i + 1] === '\n') {
-                                i++; // saltar el '\n'
+                                i++;
                             }
                             this.row++;
                             this.column = 1;
@@ -139,14 +138,11 @@ class LexicalAnalyzer {
                             break;
                         default:
                             if (/\d/.test(char)) {
-                                // es un dígito
                                 this.state = 70;
                                 this.addCharacter(char);
                             } else if (char == '#' && i == input.length - 1) {
-                                // Se termino el analisis
                                 console.log("Analyze Finished");
                             } else {
-                                // Error Léxico
                                 this.addError(Type.UNKNOW, char, this.row, this.column);
                                 this.column++;
                             }
@@ -303,7 +299,6 @@ class LexicalAnalyzer {
                     this.clean();
                     i--;
                     break;
-
                 case 20:
                     if (char === 't') {
                         this.addCharacter(char);
@@ -633,14 +628,14 @@ class LexicalAnalyzer {
                     this.clean();
                     i--;
                     break;
-                case 56: // Manejo de cadenas                    
+                case 56:                  
                     if (char === '"') {
                         this.addCharacter(char);
                         this.state = 57;
                     } else if (char === '#' || char === '\n') {
                         this.addError(Type.UNKNOW, this.auxChar, this.row, this.column - this.auxChar.length);
                         this.clean();
-                        i--; // Reprocesar el carácter
+                        i--;
                     } else {
                         this.addCharacter(char);
                     }
@@ -648,7 +643,7 @@ class LexicalAnalyzer {
                 case 57:
                     this.addToken(Type.STRING, this.auxChar, this.row, this.column - this.auxChar.length);
                     this.clean();
-                    i--; // Reprocesar el siguiente carácter
+                    i--;
                     break;
                 case 58:
                     if (char != 'u') {
@@ -756,7 +751,6 @@ class LexicalAnalyzer {
                     i--;
                     break;
                 case 70:
-                    // Manejo de numeros
                     if (/\d/.test(char)) {
                         this.addCharacter(char);
                         continue;
@@ -778,7 +772,6 @@ class LexicalAnalyzer {
         this.column++;
     }
 
-    // Función de Retorno
     private clean() {
         this.state = 0;
         this.auxChar = '';
@@ -795,7 +788,6 @@ class LexicalAnalyzer {
     getErrorList() {
         return this.errorList;
     }
-
 }
 
 export { LexicalAnalyzer };

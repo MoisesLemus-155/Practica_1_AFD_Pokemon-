@@ -4,13 +4,11 @@ import { processTokens } from '../Analyzer/processTokens';
 
 
 export const analyze = async (req: Request, res: Response) => {
-    // const input = req.body.input;
-    const input = req.body;
+    const input = req.body.input;
 
     const lexicalAnalyzer = new LexicalAnalyzer();
     const tokenList = lexicalAnalyzer.scanner(input);
     const errorList = lexicalAnalyzer.getErrorList();
-
     const jugadores = processTokens(tokenList);
 
     res.json({
@@ -20,12 +18,6 @@ export const analyze = async (req: Request, res: Response) => {
     });
 };
 
-
-
-export const ping = (req: Request, res: Response) => {
-    res.send("pong");
-}
-
 export const justGet = (req: Request, res: Response) => {
-    res.send("Hola Mundo, Bienvenido a la guia Pokemon")
+    res.send("Hola Mundo, Bienvenido a la PokeAyuda")
 }
